@@ -59,6 +59,7 @@ class SubViewportContainer;
 class VSeparator;
 class VSplitContainer;
 class ViewportNavigationControl;
+class ViewportZoomButtonControl;
 class WorldEnvironment;
 
 class ViewportRotationControl : public Control {
@@ -83,7 +84,7 @@ class ViewportRotationControl : public Control {
 	int orbiting_index = -1;
 	int focused_axis = -2;
 
-	const float AXIS_CIRCLE_RADIUS = 8.0f * EDSCALE;
+	const float AXIS_CIRCLE_RADIUS = 8.0f * EDSCALE; //TAMANHO DAS BOLINHAS DO X Y Z
 
 protected:
 	void _notification(int p_what);
@@ -105,6 +106,7 @@ class Node3DEditorViewport : public Control {
 	friend class Node3DEditor;
 	friend class ViewportNavigationControl;
 	friend class ViewportRotationControl;
+	friend class ViewportZoomButtonControl;
 	enum {
 		VIEW_TOP,
 		VIEW_BOTTOM,
@@ -254,6 +256,7 @@ private:
 	ViewportNavigationControl *position_control = nullptr;
 	ViewportNavigationControl *look_control = nullptr;
 	ViewportRotationControl *rotation_control = nullptr;
+	ViewportZoomButtonControl *zoom_control = nullptr;
 	Gradient *frame_time_gradient = nullptr;
 	Label *cpu_time_label = nullptr;
 	Label *gpu_time_label = nullptr;
@@ -983,6 +986,36 @@ protected:
 public:
 	void set_navigation_mode(Node3DEditorViewport::NavigationMode p_nav_mode);
 	void set_viewport(Node3DEditorViewport *p_viewport);
+};
+
+class ViewportZoomButtonControl : public Control {
+	GDCLASS(ViewportZoomButtonControl, Control);
+
+	Node3DEditorViewport *viewport = nullptr;
+	bool hovered = false;
+	bool zoomed_in = false;
+	Vector2i focused_mouse_start; //Don't think I need this
+	Vector2 focused_pos;
+	int focused_index = -1;
+
+	Node3DEditorViewport::NavigationMode nav_mode = Node3DEditorViewport::NavigationMode::NAVIGATION_NONE;
+
+	const float ZOOM_BUTTON_RADIUS = 7.0f * EDSCALE;
+	const float ZOOM_AMOUNT = 0.1f;
+
+	protected:
+	void _notification(int p_what);
+	virtual void gui_input(const Ref<InputEvent> &p_event) override;
+	void _draw();
+	void _on_mouse_entered();
+	void _on_mouse_exited();
+	void _process_click(int p_index, Vector2 p_position, bool p_pressed);
+	void _process_drag(int p_index, Vector2 p_position, Vector2 p_relative_position);
+	void _update_navigation();
+
+	public:
+		void set_navigation_mode(Node3DEditorViewport::NavigationMode p_nav_mode);
+		void set_viewport(Node3DEditorViewport *p_viewport);
 };
 
 #endif // NODE_3D_EDITOR_PLUGIN_H

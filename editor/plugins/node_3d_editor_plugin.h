@@ -85,7 +85,7 @@ class ViewportRotationControl : public Control {
 	int orbiting_index = -1;
 	int focused_axis = -2;
 
-	const float AXIS_CIRCLE_RADIUS = 8.0f * EDSCALE; //TAMANHO DAS BOLINHAS DO X Y Z
+	const float AXIS_CIRCLE_RADIUS = 8.0f * EDSCALE;
 
 protected:
 	void _notification(int p_what);

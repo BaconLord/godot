@@ -323,10 +323,10 @@ void ViewportRotationControl::_notification(int p_what) {
 
 void ViewportRotationControl::_draw() {
 	const Vector2i center = get_size() / 2.0;
-	const real_t radius = get_size().x / 2.0; // TAMANHO DO CIRCULO WHEN HOVERED
+	const real_t radius = get_size().x / 2.0;
 
 	if (focused_axis > -2 || orbiting_index != -1) {
-		draw_circle(center, radius, Color(0.5, 0.5, 0.5, 0.25)); //COR DA BOLA WHEN HOVERED
+		draw_circle(center, radius, Color(0.5, 0.5, 0.5, 0.25));
 	}
 
 	Vector<Axis2D> axis_to_draw;
@@ -5712,7 +5712,7 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	pov_translation_control->set_custom_minimum_size(Size2(zoom_and_pov_control_size, zoom_and_pov_control_size) * EDSCALE);
 	pov_translation_control->set_h_size_flags(SIZE_SHRINK_END);
 	pov_translation_control->set_viewport(this);
-	top_right_vbox->add_child(pov_translation_control); //FIGURE OUT WHY ITS MOVING STUPID
+	top_right_vbox->add_child(pov_translation_control);
 
 	// Individual Labels are used to allow coloring each label with its own color.
 	cpu_time_label = memnew(Label);

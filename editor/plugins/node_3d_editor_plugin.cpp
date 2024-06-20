@@ -944,6 +944,7 @@ void Node3DEditorViewport::_update_camera(real_t p_interp_delta) {
 		position_control->queue_redraw();
 		look_control->queue_redraw();
 		zoom_control->queue_redraw();
+		pov_translation_control->queue_redraw();
 		spatial_editor->update_grid();
 	}
 }
